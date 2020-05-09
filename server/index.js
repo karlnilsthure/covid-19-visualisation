@@ -25,11 +25,11 @@ app.get("/api/covidData", async (req, res) => {
     const response = await axios.get(
       "https://covidtracking.com/api/v1/states/current.json"
     );
-    console.log(response.data);
+
+    res.send(response.data);
   } catch (error) {
     console.log(error);
   }
-  res.send({ emojiArray });
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
