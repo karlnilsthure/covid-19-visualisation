@@ -22,11 +22,44 @@ app.use(
 
 app.get("/api/covidData", async (req, res) => {
   try {
-    const response = await axios.get(
+    const allStates = await axios.get(
       "https://covidtracking.com/api/v1/states/current.json"
     );
 
-    res.send(response.data);
+    const getStateUrlArray = allStates.data.map((state) => {
+      return `https://covidtracking.com/api/v1/states/${state.state}/daily.json`;
+    });
+
+    const statesWithHistory = await axios.all(
+      getStateUrlArray.map((url) => axios.get(url))
+    );
+
+    const extractedStates = statesWithHistory.map(({ data }) => {
+      return { data };
+    });
+
+    const firstState = extractedStates[0];
+
+    const filteredStates = allStates.data.map(
+      ({ state, positive, negative, death, hospitalizedCurrently }) => {
+        return { state, positive, negative, death, hospitalizedCurrently };
+      }
+    );
+
+    const removeNulls = (obj) => {
+      Object.keys(obj).forEach((key) => {
+        if (obj[key] === null) {
+          obj[key] = "N/A";
+        }
+      });
+      return obj;
+    };
+
+    const removedNulls = filteredStates.map((state) => {
+      return removeNulls(state);
+    });
+
+    res.send(removedNulls);
   } catch (error) {
     console.log(error);
   }
