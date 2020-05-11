@@ -39,8 +39,8 @@ export const Info = () => {
           last three days.
         </Typography>
         <Typography variant="subtitle1">
-          <strong>Deaths</strong> displays the number total number of deaths in
-          the state, so far.
+          <strong>Deaths</strong> displays the total number of deaths in the
+          state, so far.
         </Typography>
       </div>
     </div>
