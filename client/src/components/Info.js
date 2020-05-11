@@ -24,7 +24,7 @@ export const Info = () => {
       </Typography>
       <div className={classes.subtitle}>
         <Typography variant="subtitle1">
-          This is a representation of data from{" "}
+          This data is coming from{" "}
           <Link
             className={classes.link}
             target="_blank"
@@ -39,7 +39,7 @@ export const Info = () => {
           last three days.
         </Typography>
         <Typography variant="subtitle1">
-          <strong>Deaths</strong> displays the number total number if deaths in
+          <strong>Deaths</strong> displays the number total number of deaths in
           the state, so far.
         </Typography>
       </div>

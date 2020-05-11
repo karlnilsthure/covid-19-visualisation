@@ -31,7 +31,6 @@ app.get("/api/covidData", async (req, res) => {
       statesCurrent,
       statesWithHistory,
     } = await getStatesDataFromCovidTracking();
-
     const deathLastThreeDays = getDeathsLastThreeDays(statesWithHistory);
     const formatedData = formatData(statesCurrent.data);
     const finalData = addDeathsToStatesArray(formatedData, deathLastThreeDays);
@@ -42,4 +41,4 @@ app.get("/api/covidData", async (req, res) => {
   }
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Listening on port ${port}!`));
