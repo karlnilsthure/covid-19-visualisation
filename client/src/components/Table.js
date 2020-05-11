@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   Table,
   TableBody,
@@ -50,4 +51,20 @@ export const SimpleTable = ({ states }) => {
       </Table>
     </TableContainer>
   );
+};
+
+SimpleTable.propTypes = {
+  state: PropTypes.arrayOf(
+    PropTypes.shape({
+      stateName: PropTypes.string,
+      positive: PropTypes.number,
+      negative: PropTypes.number,
+      deathsLastThreeDays: PropTypes.number,
+      death: PropTypes.number,
+      hospitalizedCurrently: PropTypes.oneOf([
+        PropTypes.string,
+        PropTypes.number,
+      ]),
+    })
+  ),
 };
