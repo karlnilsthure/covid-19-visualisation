@@ -1,5 +1,10 @@
 const express = require("express");
-const axios = require("axios");
+const { getStatesDataFromCovidTracking } = require("./covidTracking.js");
+const {
+  formatData,
+  getDeathsLastThreeDays,
+  addDeathsToStatesArray,
+} = require("./helpers.js");
 
 const app = express();
 const port = 4000;
@@ -22,44 +27,17 @@ app.use(
 
 app.get("/api/covidData", async (req, res) => {
   try {
-    const allStates = await axios.get(
-      "https://covidtracking.com/api/v1/states/current.json"
-    );
+    const {
+      statesCurrent,
+      statesWithHistory,
+    } = await getStatesDataFromCovidTracking();
 
-    const getStateUrlArray = allStates.data.map((state) => {
-      return `https://covidtracking.com/api/v1/states/${state.state}/daily.json`;
-    });
+    const deathLastThreeDays = getDeathsLastThreeDays(statesWithHistory);
+    const formatedData = formatData(statesCurrent.data);
 
-    const statesWithHistory = await axios.all(
-      getStateUrlArray.map((url) => axios.get(url))
-    );
+    const finalData = addDeathsToStatesArray(formatedData, deathLastThreeDays);
 
-    const extractedStates = statesWithHistory.map(({ data }) => {
-      return { data };
-    });
-
-    const firstState = extractedStates[0];
-
-    const filteredStates = allStates.data.map(
-      ({ state, positive, negative, death, hospitalizedCurrently }) => {
-        return { state, positive, negative, death, hospitalizedCurrently };
-      }
-    );
-
-    const removeNulls = (obj) => {
-      Object.keys(obj).forEach((key) => {
-        if (obj[key] === null) {
-          obj[key] = "N/A";
-        }
-      });
-      return obj;
-    };
-
-    const removedNulls = filteredStates.map((state) => {
-      return removeNulls(state);
-    });
-
-    res.send(removedNulls);
+    res.send(finalData);
   } catch (error) {
     console.log(error);
   }

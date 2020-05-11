@@ -24,7 +24,8 @@ export const SimpleTable = ({ states }) => {
             <TableCell>State</TableCell>
             <TableCell align="right">Positive</TableCell>
             <TableCell align="right">Negative</TableCell>
-            <TableCell align="right">Deaths</TableCell>
+            <TableCell align="right">New deaths</TableCell>
+            <TableCell align="right">Deaths (total)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -33,13 +34,15 @@ export const SimpleTable = ({ states }) => {
               title={hospitalizedString(state.hospitalizedCurrently)}
               placement="top"
               arrow
+              key={index}
             >
-              <TableRow key={index} hover>
+              <TableRow hover>
                 <TableCell component="th" scope="row">
-                  {state.state}
+                  {state.stateName}
                 </TableCell>
                 <TableCell align="right">{state.positive}</TableCell>
                 <TableCell align="right">{state.negative}</TableCell>
+                <TableCell align="right">{state.deathsLastThreeDays}</TableCell>
                 <TableCell align="right">{state.death}</TableCell>
               </TableRow>
             </Tooltip>
