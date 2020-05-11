@@ -25,10 +25,10 @@ const removeUnusedData = ({
   };
 };
 
-const mapAbbreviationToStateName = (state) => {
+const mapAbbreviationToStateName = (statesJSONfile, state) => {
   return {
     ...state,
-    stateName: statesJSON[state.state],
+    stateName: statesJSONfile[state.state],
   };
 };
 
@@ -36,11 +36,11 @@ const formatData = (statesArray) => {
   return statesArray
     .map((state) => removeUnusedData(state))
     .map((state) => replaceNullValuesWithNA(state))
-    .map((state) => mapAbbreviationToStateName(state));
+    .map((state) => mapAbbreviationToStateName(statesJSON, state));
 };
 
-const getDeathsLastThreeDays = (stateWithHistory) => {
-  const result = stateWithHistory.map((stateArray) => {
+const getDeathsLastThreeDays = (statesWithHistory) => {
+  const result = statesWithHistory.map((stateArray) => {
     const deathsCurrentDate = stateArray.data[0].death;
     const deathsFourDaysAgo = stateArray.data[3].death;
     const deathsLastThreeDays = deathsCurrentDate - deathsFourDaysAgo;
@@ -68,6 +68,9 @@ const addDeathsToStatesArray = (statesArray, deathsArray) => {
 };
 
 module.exports = {
+  replaceNullValuesWithNA,
+  removeUnusedData,
+  mapAbbreviationToStateName,
   formatData,
   getDeathsLastThreeDays,
   addDeathsToStatesArray,

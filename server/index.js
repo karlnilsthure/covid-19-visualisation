@@ -34,7 +34,6 @@ app.get("/api/covidData", async (req, res) => {
 
     const deathLastThreeDays = getDeathsLastThreeDays(statesWithHistory);
     const formatedData = formatData(statesCurrent.data);
-
     const finalData = addDeathsToStatesArray(formatedData, deathLastThreeDays);
 
     res.send(finalData);
