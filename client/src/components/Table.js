@@ -25,7 +25,7 @@ export const SimpleTable = ({ states }) => {
             <TableCell align="right">Positive</TableCell>
             <TableCell align="right">Negative</TableCell>
             <TableCell align="right">New deaths</TableCell>
-            <TableCell align="right">Deaths (total)</TableCell>
+            <TableCell align="right">Deaths</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

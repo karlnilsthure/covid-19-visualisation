@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
+import { Typography, Link } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
@@ -10,6 +10,9 @@ const useStyles = makeStyles({
   subtitle: {
     marginBottom: "36px",
   },
+  link: {
+    cursor: "pointer",
+  },
 });
 
 export const Info = () => {
@@ -19,11 +22,27 @@ export const Info = () => {
       <Typography className={classes.header} variant="h1">
         Covid 19
       </Typography>
-      <Typography className={classes.subtitle} variant="subtitle1">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu
-        pretium ipsum. Quisque sit amet risus at risus lacinia elementum at ut
-        erat. Aliquam id risus sed neque volutpat dictum.
-      </Typography>
+      <div className={classes.subtitle}>
+        <Typography variant="subtitle1">
+          This is a representation of data from{" "}
+          <Link
+            className={classes.link}
+            target="_blank"
+            href="https://covidtracking.com/api"
+          >
+            "The covid tracking project"
+          </Link>
+          .
+        </Typography>
+        <Typography variant="subtitle1">
+          <strong>New deaths</strong> displays the number of deaths during the
+          last three days.
+        </Typography>
+        <Typography variant="subtitle1">
+          <strong>Deaths</strong> displays the number total number if deaths in
+          the state, so far.
+        </Typography>
+      </div>
     </div>
   );
 };
